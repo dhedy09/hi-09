@@ -1,0 +1,14 @@
+#!/bin/bash
+
+is_alive_ping()
+{
+	ping -c 1 -s 8 -w 10000 $1 > /dev/null
+#	[ $? -eq 0 ] && echo Node with IP: $i is up.
+	sleep 10
+}
+
+host=`cat settings.ini | grep "host ="| awk '{print $3}'`
+for (( ; ; ))
+do
+	is_alive_ping $host & disown 
+done
